@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "227036902139",
+    "project_id": "rktd-dc36f",
+    "storage_bucket": "rktd-dc36f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227036902139:android:80a566954110b4515a765e",
+        "android_client_info": {
+          "package_name": "com.example.rktd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227036902139-5144d8cppnfqf1ejhkr8t3qbb6pokh0e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiV1Wl1rErWVUmG5IxpoZmDeXq_0OMoDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227036902139-5144d8cppnfqf1ejhkr8t3qbb6pokh0e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
