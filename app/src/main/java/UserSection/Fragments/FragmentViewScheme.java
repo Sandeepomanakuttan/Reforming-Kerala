@@ -18,6 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 import Admin.datacollectionClass.SchemedataCollection;
@@ -57,20 +59,20 @@ public class FragmentViewScheme extends Fragment {
         SchemeArrayList=new ArrayList<>();
         if (status==("Scheme")) {
 
-            DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("Scheme_Table");
-            Query query=reference2.orderByChild("authority").equalTo(authority);
-                    query.addValueEventListener(new ValueEventListener() {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Scheme_Table");
+            Query query=reference.orderByChild(authority).equalTo("authority");
+            query.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        SchemedataCollection collection = dataSnapshot.getValue(SchemedataCollection.class);
-                        if (collection.getAuthority_Place().equalsIgnoreCase("authority_Place")) {
-                            SchemeArrayList.add(collection);
-
+                        SchemedataCollection collection=dataSnapshot.getValue(SchemedataCollection.class);
+                        SchemeArrayList.add(collection);
+                        viewAdaptor=new SchemeViewAdaptor(getContext(),SchemeArrayList, id);
+                        recyclerView.setAdapter(viewAdaptor);
                         }
+                        viewAdaptor.notifyDataSetChanged();
                     }
-                    viewAdaptor.notifyDataSetChanged();
-                }
+
 
                 @Override
                 public void onCancelled(@NonNull @org.jetbrains.annotations.NotNull DatabaseError error) {

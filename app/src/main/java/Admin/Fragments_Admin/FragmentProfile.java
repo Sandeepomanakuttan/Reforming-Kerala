@@ -61,10 +61,6 @@ public class FragmentProfile extends Fragment {
         editUsername.setAlpha(0);
         editUsername.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
 
-        editPass.setTranslationX(800);
-        editPass.setAlpha(0);
-        editPass.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-
         editPost.setTranslationX(800);
         editPost.setAlpha(0);
         editPost.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
@@ -92,7 +88,6 @@ public class FragmentProfile extends Fragment {
                     ProfileData data = childSnapshot.getValue(ProfileData.class);
                     editName.setText(data.getName());
                     editUsername.setText(data.getUserName());
-                    editPass.setText(data.getPassword());
                     editPost.setText(data.getUser());
                     String link1 =data.getImageUri();
                     Picasso.get().load(link1).into(imgpro);

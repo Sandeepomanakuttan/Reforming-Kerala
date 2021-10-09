@@ -45,7 +45,6 @@ public class commonProfile extends AppCompatActivity {
         String id=getIntent().getStringExtra("id");
         String name=getIntent().getStringExtra("name");
 
-       // Dialog dialog=new Dialog(commonProfile.this,R.style.Dialoge);
 
         Query query=Profilereference.orderByChild("id").equalTo(id);
         query.addValueEventListener(new ValueEventListener() {

@@ -20,7 +20,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
@@ -99,23 +98,37 @@ public class Registration_form extends AppCompatActivity {
                else {
 
                     DatabaseReference reference=FirebaseDatabase.getInstance().getReference("User_Verification_Table");
-                    Query query=reference.orderByChild("house_OwnerName").equalTo(personName);
 
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                            if (snapshot.exists()){
-                                String dist=snapshot.child("house_OwnerName").child("district").getValue(String.class);
-                                String pan=snapshot.child("house_OwnerName").child("Panchayath").getValue(String.class);
-                                String ward=snapshot.child("house_OwnerName").child("wardNo").getValue(String.class);
-                                String house=snapshot.child("house_OwnerName").child("houseNo").getValue(String.class);
+                            if (snapshot.child(personName).exists()){
+                            for (DataSnapshot childSnapshot : snapshot.getChildren()){
+                                PersonDataCollection data = childSnapshot.getValue(PersonDataCollection.class);
+                                if (data.getDistrict().equals(Districtvalue)
+                                        ||data.getPanchayath().equals(Panchayathvalue)||
+                                        data.getWardNo().equals(WardNo)||data.getHouseNo().equalsIgnoreCase(HouseNo)){
+//
+                                    Toast.makeText(getApplicationContext(), "Succefully Verified", Toast.LENGTH_SHORT).show();
+                                    Intent intent=new Intent(getApplicationContext(),PersonDetaills.class);
+                                    intent.putExtra("HouseOwner",personName);
+                                    intent.putExtra("District",Districtvalue);
+                                    intent.putExtra("panchayath",Panchayathvalue);
+                                    intent.putExtra("HouseNo",HouseNo);
+                                    intent.putExtra("WardNo",WardNo);
+                                    startActivity(intent);
+                                    finish();
+                                    break;
 
-                                if (dist.equals(Districtvalue)){}
-                                if (dist.equals(Districtvalue)){}
-                                if (dist.equals(Districtvalue)){}
-                                if (dist.equals(Districtvalue)){}
-                                if (dist.equals(Districtvalue)){}
+                                }
+
                             }
+
+                        }
+                            Toast.makeText(Registration_form.this,"Data Does not match",Toast.LENGTH_LONG).show();
+                            Name.setText("");
+                            edtWardNo.setText("");
+                            edtHouseNo.setText("");
                         }
 
                         @Override
@@ -124,21 +137,6 @@ public class Registration_form extends AppCompatActivity {
                         }
                     });
 
-                             Toast.makeText(Registration_form.this,"succeful",Toast.LENGTH_LONG).show();
-                             PersonDataCollection profileData=new PersonDataCollection();
-                             profileData.setHouse_OwnerName(personName);
-                             profileData.setDistrict(Districtvalue);
-                             profileData.setPanchayath(Panchayathvalue);
-                             profileData.setWardNo(WardNo);
-                             profileData.setHouseNo(HouseNo);
-                             Intent intent=new Intent(Registration_form.this, PersonalInformationPage.class);
-                             intent.putExtra(personName,personName);
-                             intent.putExtra(District,Districtvalue);
-                             intent.putExtra(panchayath,Panchayathvalue);
-                             intent.putExtra(WardNo,WardNo);
-                             intent.putExtra(HouseNo,HouseNo);
-                             startActivity(intent);
-                             finish();
                }
             }
         });
@@ -154,7 +152,6 @@ public class Registration_form extends AppCompatActivity {
                 spinnerDataList.clear();
 
                 for (DataSnapshot item : dataSnapshot.getChildren()) {
-                    Toast.makeText(Registration_form.this, "fetching", Toast.LENGTH_SHORT).show();
                     String dis = item.child("district").getValue(String.class);
                     spinnerDataList.add(dis);
                 }
@@ -175,8 +172,6 @@ public class Registration_form extends AppCompatActivity {
                     }
                 });
 
-                Toast.makeText(Registration_form.this, "yes", Toast.LENGTH_SHORT).show();
-           //     Toast.makeText(Registration_form.this, District, Toast.LENGTH_SHORT).show();
 
             }
 
@@ -194,7 +189,6 @@ public class Registration_form extends AppCompatActivity {
                 spinnerPanchayathList.clear();
 
                 for (DataSnapshot item : dataSnapshot.getChildren()) {
-                    Toast.makeText(Registration_form.this, "fetching", Toast.LENGTH_SHORT).show();
                     String Panchayath = item.child("panchayath").getValue(String.class);
                     spinnerPanchayathList.add(Panchayath);
                 }

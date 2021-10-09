@@ -29,7 +29,8 @@ import java.util.concurrent.TimeUnit;
 public class verifyOtp extends AppCompatActivity {
     EditText inputcode1,inputcode2,inputcode3,inputcode4,inputcode5,inputcode6;
     String verification_id,personName,userName,password;
-    byte[] byteArray;
+    String strName,strAddress,strDob,strStatus,strUid,strFathername,strMatherName,Panchayathvalue,strRti,strAnual,Districtvalue,WardNo,HouseNo,strmob,image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,18 +38,30 @@ public class verifyOtp extends AppCompatActivity {
 
         TextView txtMobileno=findViewById(R.id.txtMobile);
         txtMobileno.setText(String.format("+91-%s",getIntent().getStringExtra("mobile")));
-
+        strmob=getIntent().getStringExtra("mobile");
         inputcode1=findViewById(R.id.InputCode1);
         inputcode2=findViewById(R.id.InputCode2);
         inputcode3=findViewById(R.id.InputCode3);
         inputcode4=findViewById(R.id.InputCode4);
         inputcode5=findViewById(R.id.InputCode5);
         inputcode6=findViewById(R.id.InputCode6);
-        personName=getIntent().getStringExtra("personName");
-        userName=getIntent().getStringExtra("userName");
-        password=getIntent().getStringExtra("password");
-        Bundle extras = getIntent().getExtras();
-        byteArray = extras.getByteArray("image");
+        Intent intent=getIntent();
+        personName=intent.getStringExtra("HouseOwner");
+        Districtvalue=intent.getStringExtra("District");
+        WardNo=intent.getStringExtra("WardNo");
+        Panchayathvalue=intent.getStringExtra("panchayath");
+        HouseNo=intent.getStringExtra("HouseNo");
+        strName=intent.getStringExtra("Name");
+        strDob=intent.getStringExtra("dob");
+        strUid=intent.getStringExtra("uid");
+        strStatus=intent.getStringExtra("status");
+        strFathername=intent.getStringExtra("Father");
+        strMatherName=intent.getStringExtra("mother");
+        strAddress=intent.getStringExtra("Address");
+        strRti=intent.getStringExtra("RITNo");
+        strAnual=intent.getStringExtra("anualIncome");
+        image = intent.getStringExtra("image");
+
 
 
         setupOTPinput();
@@ -95,7 +108,27 @@ public class verifyOtp extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Intent intent=new Intent(getApplicationContext(), innerRegpage1.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.putExtra("mobile",strmob);
+                                intent.putExtra("personName",personName);
+                                intent.putExtra("userName",userName);
+                                intent.putExtra("password",password);
+                                intent.putExtra("Name",strName);
+                                intent.putExtra("dob",strDob);
+                                intent.putExtra("uid",strUid);
+                                intent.putExtra("status",strStatus);
+                                intent.putExtra("Father",strFathername);
+                                intent.putExtra("mother",strMatherName);
+                                intent.putExtra("Address",strAddress);
+                                intent.putExtra("RITNo",strRti);
+                                intent.putExtra("anualIncome",strAnual);
+                                intent.putExtra("HouseOwner",personName);
+                                intent.putExtra("District",Districtvalue);
+                                intent.putExtra("panchayath",Panchayathvalue);
+                                intent.putExtra("HouseNo",HouseNo);
+                                intent.putExtra("WardNo",WardNo);
+                                intent.putExtra("image",image);
                                 startActivity(intent);
+                                finish();
 
                             }else{
                                 Toast.makeText(verifyOtp.this,"the verfication code entered was invaliad",Toast.LENGTH_SHORT).show();

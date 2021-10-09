@@ -85,10 +85,11 @@ public class FragmentUserAdd extends Fragment {
                 if (snapshot.child(name).exists()){
                 for (DataSnapshot childSnapshot : snapshot.getChildren()) {
                     PersonDataCollection data = childSnapshot.getValue(PersonDataCollection.class);
-                    if (data.getDistrict().equalsIgnoreCase(personDataCollection.getDistrict())
-                    ||data.getPanchayath().equalsIgnoreCase(personDataCollection.getPanchayath())||
-                            data.getWardNo().equalsIgnoreCase(personDataCollection.getWardNo())||data.getHouseNo().equalsIgnoreCase(personDataCollection.getHouseNo())){
-                    InsertUser(personDataCollection);
+                    if (data.getDistrict().equals(personDataCollection.getDistrict())
+                    ||data.getPanchayath().equals(personDataCollection.getPanchayath())||
+                            data.getWardNo().equals(personDataCollection.getWardNo())||data.getHouseNo().equals(personDataCollection.getHouseNo())){
+                        Toast.makeText(getContext(), "Data already Exist", Toast.LENGTH_SHORT).show();
+
                 }}} else {
                     InsertUser(personDataCollection);
                 }

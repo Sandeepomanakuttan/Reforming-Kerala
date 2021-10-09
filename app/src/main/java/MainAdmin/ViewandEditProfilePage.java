@@ -25,8 +25,8 @@ public class ViewandEditProfilePage extends AppCompatActivity {
 
 
         final viewProfilefragment AdaptorMain = new viewProfilefragment(getSupportFragmentManager());
-        AdaptorMain.AddFragment(new VIEW_FRAGMENT_CLASS(id,name), "Villege");
-        AdaptorMain.AddFragment(new EDIT_VIEW_FRAGMENT_CLASS(id,name), "Panchayath");
+        AdaptorMain.AddFragment(new VIEW_FRAGMENT_CLASS(id,name), "View");
+        AdaptorMain.AddFragment(new EDIT_VIEW_FRAGMENT_CLASS(id,name), "Edit");
 
         viewPager.setAdapter(AdaptorMain);
         tabLayout.setupWithViewPager(viewPager);

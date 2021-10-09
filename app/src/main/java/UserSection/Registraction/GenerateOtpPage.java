@@ -1,6 +1,7 @@
 package UserSection.Registraction;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -35,9 +36,11 @@ public class GenerateOtpPage extends AppCompatActivity {
     ProgressBar progressBar;
     String phoneNo;
     String fullnumber,personName,userName,password;
-    byte[] byteArray;
+    Uri myUri;
     Button btnGetOTP;
     EditText inputMobileNo;
+    String strName,strAddress,strDob,strStatus,strUid,strFathername,strMatherName,Panchayathvalue,strRti,strAnual,Districtvalue,WardNo,HouseNo,image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +50,23 @@ public class GenerateOtpPage extends AppCompatActivity {
         inputMobileNo=findViewById(R.id.EtxtphoneNo);
         btnGetOTP=findViewById(R.id.btnGetOTP);
         progressBar=findViewById(R.id.progressbar);
-        personName=getIntent().getStringExtra("personName");
-        userName=getIntent().getStringExtra("userName");
-        password=getIntent().getStringExtra("password");
-        Bundle extras = getIntent().getExtras();
-        byteArray = extras.getByteArray("picture");
+        Intent intent=getIntent();
+        personName=intent.getStringExtra("HouseOwner");
+        Districtvalue=intent.getStringExtra("District");
+        WardNo=intent.getStringExtra("WardNo");
+        Panchayathvalue=intent.getStringExtra("panchayath");
+        HouseNo=intent.getStringExtra("HouseNo");
+        strName=intent.getStringExtra("Name");
+        strDob=intent.getStringExtra("dob");
+        strUid=intent.getStringExtra("uid");
+        strStatus=intent.getStringExtra("status");
+        strFathername=intent.getStringExtra("Father");
+        strMatherName=intent.getStringExtra("mother");
+        strAddress=intent.getStringExtra("Address");
+        strRti=intent.getStringExtra("RITNo");
+        strAnual=intent.getStringExtra("anualIncome");
+        image =intent.getStringExtra("image");
+
 
 
         mAuth=FirebaseAuth.getInstance();
@@ -125,7 +140,21 @@ public class GenerateOtpPage extends AppCompatActivity {
            intent.putExtra("personName",personName);
            intent.putExtra("userName",userName);
            intent.putExtra("password",password);
-           intent.putExtra("image",byteArray);
+            intent.putExtra("Name",strName);
+            intent.putExtra("dob",strDob);
+            intent.putExtra("uid",strUid);
+            intent.putExtra("status",strStatus);
+            intent.putExtra("Father",strFathername);
+            intent.putExtra("mother",strMatherName);
+            intent.putExtra("Address",strAddress);
+            intent.putExtra("RITNo",strRti);
+            intent.putExtra("anualIncome",strAnual);
+            intent.putExtra("HouseOwner",personName);
+            intent.putExtra("District",Districtvalue);
+            intent.putExtra("panchayath",Panchayathvalue);
+            intent.putExtra("HouseNo",HouseNo);
+            intent.putExtra("WardNo",WardNo);
+            intent.putExtra("image",image);
            startActivity(intent);
 
         }

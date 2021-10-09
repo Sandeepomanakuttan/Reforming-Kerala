@@ -113,7 +113,6 @@ public class UserMainPage extends AppCompatActivity {
         navigationView = findViewById(R.id.NavigationView);
         view = navigationView.getHeaderView(0);
         editName = view.findViewById(R.id.editUsername);
-        editpass = view.findViewById(R.id.editpass);
         proimage = view.findViewById(R.id.image);
         name = view.findViewById(R.id.name);
         Position = view.findViewById(R.id.Position);
@@ -241,7 +240,6 @@ public class UserMainPage extends AppCompatActivity {
                 for (DataSnapshot childSnapshot : snapshot.getChildren()) {
                     ProfileData data = childSnapshot.getValue(ProfileData.class);
                     editName.setText(data.getUserName());
-                    editpass.setText(data.getPassword());
                     name.setText(data.getName());
                     Position.setText(data.getUser());
 

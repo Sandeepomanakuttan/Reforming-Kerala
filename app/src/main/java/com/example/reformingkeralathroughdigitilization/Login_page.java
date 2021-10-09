@@ -72,23 +72,20 @@ DatabaseReference RKTDRef;
             }
             else {
                 if (awesomeValidation.validate()) {
-                    Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
                     ProfileData dataClass = new ProfileData();
                     dataClass.setUserName(struserName);
                     dataClass.setPassword(strPassword);
                     Query query;
                     query = RKTDRef;
-//                    .orderByChild("userName").equalTo(dataClass.getUserName())
                     query.addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.child(struserName).exists()){
                             for (DataSnapshot childSnapshot : snapshot.getChildren()) {
                                 ProfileData data = childSnapshot.getValue(ProfileData.class);
-                                Toast.makeText(Login_page.this, "hlll", Toast.LENGTH_SHORT).show();
-                                if (data.getUserName().equals(dataClass.getUserName())){
-                                    if(dataClass.getPassword().equals(data.getPassword())) {
-                                        if (data.getUser().equalsIgnoreCase("General")) {
+                                    if(data.getPassword().equals(strPassword)) {
+                                        if (data.getUser().equals("General")) {
                                             Toast.makeText(Login_page.this, "welcome", Toast.LENGTH_SHORT).show();
                                             String id = data.getId();
                                             String name=data.getName();
@@ -100,7 +97,7 @@ DatabaseReference RKTDRef;
                                             finish();
                                             break;
 
-                                        } else if (data.getUser().equalsIgnoreCase("Admin")) {
+                                        } else if (data.getUser().equals("Admin")) {
                                             String id = data.getId();
                                             progressBar.setVisibility(View.INVISIBLE);
                                             Intent MainPage = new Intent(Login_page.this, mainHome.class);
@@ -110,7 +107,7 @@ DatabaseReference RKTDRef;
                                             startActivity(MainPage);
                                             finish();
                                             break;
-                                        }else if (data.getUser().equalsIgnoreCase("officer")) {
+                                        }else if (data.getUser().equals("officer")) {
                                             String id = data.getId();
                                             progressBar.setVisibility(View.INVISIBLE);
                                             Intent EmployeePage = new Intent(Login_page.this, EmployeeMainPage.class);
@@ -120,7 +117,7 @@ DatabaseReference RKTDRef;
                                             startActivity(EmployeePage);
                                             finish();
                                             break;
-                                        }else if (data.getUser().equalsIgnoreCase("User")) {
+                                        }else if (data.getUser().equals("User")) {
                                             String id = data.getId();
                                             progressBar.setVisibility(View.INVISIBLE);
                                             Intent UserPage = new Intent(Login_page.this, MainPageUser.class);
@@ -132,17 +129,16 @@ DatabaseReference RKTDRef;
                                             startActivity(UserPage);
                                             finish();
                                             break;
-                                        } else {
-                                            Toast.makeText(Login_page.this, "Nothing", Toast.LENGTH_SHORT).show();
                                         }
-                                    }
-                                    else {
-                                        Toast.makeText(Login_page.this, "Invalid Password", Toast.LENGTH_SHORT).show();
-                                    }
-                                }else{
-                                    Toast.makeText(Login_page.this, "Invalid UserName", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else{
+                                    Toast.makeText(Login_page.this, "Invalid Password", Toast.LENGTH_SHORT).show();
                                 }
 
+
+                            }}else {
+                                Toast.makeText(Login_page.this, "Nothing", Toast.LENGTH_SHORT).show();
                             }
                         }
 

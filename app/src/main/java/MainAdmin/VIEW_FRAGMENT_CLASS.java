@@ -31,7 +31,7 @@ public class VIEW_FRAGMENT_CLASS extends Fragment {
         this.name=name;
     }
 
-    TextView editName,editUsername,editPass,editPost;
+    TextView editName,editUsername,editPost;
     CircleImageView imgpro;
     DatabaseReference profileref;
 
@@ -43,7 +43,6 @@ public class VIEW_FRAGMENT_CLASS extends Fragment {
         imgpro=root.findViewById(R.id.img);
         editName=root.findViewById(R.id.editName);
         editUsername=root.findViewById(R.id.editUsername);
-        editPass=root.findViewById(R.id.editpass);
         editPost=root.findViewById(R.id.editpost);
 
         imgpro.setTranslationX(800);
@@ -57,10 +56,6 @@ public class VIEW_FRAGMENT_CLASS extends Fragment {
         editUsername.setTranslationX(800);
         editUsername.setAlpha(0);
         editUsername.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-
-        editPass.setTranslationX(800);
-        editPass.setAlpha(0);
-        editPass.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
 
         editPost.setTranslationX(800);
         editPost.setAlpha(0);
@@ -82,7 +77,6 @@ public class VIEW_FRAGMENT_CLASS extends Fragment {
                     ProfileData data = childSnapshot.getValue(ProfileData.class);
                        editName.setText(data.getName());
                        editUsername.setText(data.getUserName());
-                       editPass.setText(data.getPassword());
                        editPost.setText(data.getUser());
                 }
             }

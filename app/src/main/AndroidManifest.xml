@@ -12,28 +12,30 @@
         android:label="Exousia"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReformingKeralaThroughDigitilization.">
-        <activity android:name="UserSection.Registraction.PersonalInformationPage"></activity>
-        <activity android:name="UserSection.MainPageUser"></activity>
-        <activity android:name="UserSection.UserMainPage" />
+        <activity
+            android:name="UserSection.Registraction.PersonDetaills"
+            android:exported="true" ></activity>
+     <activity android:name="MainAdmin.commonProfile" ></activity>
+        <activity android:name="UserSection.Registraction.PersonalInformationPage" />
+        <activity android:name="UserSection.MainPageUser" />
+        <activity android:name="UserSection.UserMainPage">
+        </activity>
         <activity android:name="Employee.EmployeeMainPage" />
         <activity android:name="MainAdmin.MassegeMain" />
         <activity android:name="Admin.mainHome" />
         <activity android:name="MainAdmin.ViewandEditProfilePage" />
         <activity android:name="MainAdmin.main_admin_authority_field" />
-        <activity android:name=".flashscreen" />
-        <activity android:name="MainAdmin.commonProfile" />
+        <activity android:name=".flashscreen" ><intent-filter>
+         <action android:name="android.intent.action.MAIN" />
+
+         <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
         <activity android:name="UserSection.Registraction.verifyOtp" />
         <activity android:name="UserSection.Registraction.innerRegpage1" />
         <activity android:name=".profile" />
         <activity android:name=".ProfilePage" />
         <activity android:name="UserSection.Registraction.Registration_form" />
-        <activity android:name=".Login_page">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
+        <activity android:name=".Login_page" />
         <activity android:name="UserSection.Registraction.GenerateOtpPage" />
     </application>
 

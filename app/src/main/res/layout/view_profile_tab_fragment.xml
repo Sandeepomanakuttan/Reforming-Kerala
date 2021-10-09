@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lytpass"
+        app:layout_constraintTop_toBottomOf="@+id/lytuser"
         app:layout_constraintVertical_bias="0.133"
         app:layout_constraintWidth_percent=".8">
 
@@ -124,46 +124,12 @@
             app:layout_constraintWidth_percent=".8" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/lytpass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lytname"
-        app:layout_constraintVertical_bias="0.294"
-        app:layout_constraintWidth_percent=".8">
-
-        <TextView
-            android:id="@+id/editpass"
-            android:layout_width="267dp"
-            android:layout_height="49dp"
-            android:layout_marginStart="50dp"
-            android:background="@drawable/textborder"
-            android:drawableLeft="@drawable/ic_security"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="Password"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lytpass"
-            app:layout_constraintVertical_bias="0.06"
-            app:layout_constraintWidth_percent=".8" />
-    </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/logout"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="120dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lytpost"

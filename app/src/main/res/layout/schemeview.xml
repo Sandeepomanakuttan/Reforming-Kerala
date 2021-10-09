@@ -56,8 +56,8 @@
 
     <LinearLayout
         android:id="@+id/f"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="152dp"
+        android:layout_height="70dp"
         android:layout_alignParentTop="true"
         android:layout_marginStart="-18dp"
         android:layout_marginTop="15dp"
@@ -66,62 +66,62 @@
         android:layout_toEndOf="@+id/y"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/u"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="-18dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="27dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@+id/y"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:id="@+id/txtBelow"
+        <LinearLayout
+            android:id="@+id/u"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="1000"
-            android:textColor="@color/black"
-            android:textSize="14dp" />
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-18dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="27dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@+id/y"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/to"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="To"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
 
-        <TextView
-            android:id="@+id/txtAbove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Sandeep"
-            android:textColor="@color/black"
-            android:textSize="14dp" />
+            <TextView
+                android:id="@+id/txtBelow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="1000"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="To"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/txtAbove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Sandeep"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/txtAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:text="Amount"
-            android:layout_gravity="center"
             android:textColor="@color/black"
             android:textSize="14dp" />
 
@@ -129,8 +129,8 @@
 
     <Button
         android:id="@+id/btnapply"
-        android:layout_width="70dp"
-        android:layout_height="12dp"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="-19dp"
