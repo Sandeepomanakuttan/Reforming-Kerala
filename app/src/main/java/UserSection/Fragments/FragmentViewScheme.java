@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,11 +19,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 import Admin.datacollectionClass.SchemedataCollection;
+import UserSection.Collectionclass.PersonSchemeCollection;
+import ViewAdaptor.AcceptSchemeView;
 import ViewAdaptor.SchemeViewAdaptor;
 
 
@@ -33,7 +34,9 @@ public class FragmentViewScheme extends Fragment {
     String id;
     String status,authority,authority_Place;
     ArrayList<SchemedataCollection> SchemeArrayList;
+    ArrayList<PersonSchemeCollection> personSchemeCollections;
     SchemeViewAdaptor viewAdaptor;
+    AcceptSchemeView Adaptor;
 
 
     public FragmentViewScheme(String id, String status, String authority, String authority_Place) {
@@ -57,21 +60,29 @@ public class FragmentViewScheme extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         SchemeArrayList=new ArrayList<>();
-        if (status==("Scheme")) {
+        personSchemeCollections=new ArrayList<>();
+        if (status.equals("Scheme")) {
 
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Scheme_Table");
-            Query query=reference.orderByChild(authority).equalTo("authority");
+
+            Query query=reference.orderByChild("authority").equalTo(authority);
             query.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
+                    SchemeArrayList.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        SchemedataCollection collection=dataSnapshot.getValue(SchemedataCollection.class);
+                        SchemedataCollection collection = dataSnapshot.getValue(SchemedataCollection.class);
+                        String s=collection.getAuthority_Place();
+                        if (collection.getStrStatus().equals("Null")){
+                            if (collection.getAuthority_Place().equals(authority_Place)){
+                            Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
                         SchemeArrayList.add(collection);
-                        viewAdaptor=new SchemeViewAdaptor(getContext(),SchemeArrayList, id);
-                        recyclerView.setAdapter(viewAdaptor);
-                        }
-                        viewAdaptor.notifyDataSetChanged();
-                    }
+
+
+                    }}}
+                    viewAdaptor.notifyDataSetChanged();
+                }
+
 
 
                 @Override
@@ -83,6 +94,110 @@ public class FragmentViewScheme extends Fragment {
             recyclerView.setAdapter(viewAdaptor);
 
         }
+        else if (status.equals("Accept")){
+
+            DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Agree_Scheme_Table");
+
+            Query query=reference1.orderByChild("authority_type").equalTo(authority);
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
+                    personSchemeCollections.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        PersonSchemeCollection collection = dataSnapshot.getValue(PersonSchemeCollection.class);
+                        String s=collection.getAuthority_Place();
+                        if (collection.getPerson_id().equals(id)){
+                        if (collection.getStatus().equals("Accept")){
+                            Toast.makeText(getContext(), collection.getStatus(), Toast.LENGTH_SHORT).show();
+                            if (collection.getAuthority_Place().equals(authority_Place)){
+                                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                                personSchemeCollections.add(collection);
+
+
+                            }}}}
+                    Adaptor.notifyDataSetChanged();
+                }
+
+
+
+                @Override
+                public void onCancelled(@NonNull @org.jetbrains.annotations.NotNull DatabaseError error) {
+
+                }
+            });
+            Adaptor = new AcceptSchemeView(getContext(), personSchemeCollections,id);
+            recyclerView.setAdapter(Adaptor);
+        }
+
+        else if (status.equals("Reject")){
+
+            DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Agree_Scheme_Table");
+
+            Query query=reference1.orderByChild("authority_type").equalTo(authority);
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
+                    personSchemeCollections.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        PersonSchemeCollection collection = dataSnapshot.getValue(PersonSchemeCollection.class);
+                        String s=collection.getAuthority_Place();
+                        if (collection.getPerson_id().equals(id)){
+                            if (collection.getStatus().equals("Reject")){
+                                Toast.makeText(getContext(), collection.getStatus(), Toast.LENGTH_SHORT).show();
+                                if (collection.getAuthority_Place().equals(authority_Place)){
+                                    Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                                    personSchemeCollections.add(collection);
+
+
+                                }}}}
+                    Adaptor.notifyDataSetChanged();
+                }
+
+
+
+                @Override
+                public void onCancelled(@NonNull @org.jetbrains.annotations.NotNull DatabaseError error) {
+
+                }
+            });
+            Adaptor = new AcceptSchemeView(getContext(), personSchemeCollections,id);
+            recyclerView.setAdapter(Adaptor);
+        }
+        else if (status.equals("Pending")){
+
+            DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Agree_Scheme_Table");
+
+            Query query=reference1.orderByChild("authority_type").equalTo(authority);
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
+                    personSchemeCollections.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        PersonSchemeCollection collection = dataSnapshot.getValue(PersonSchemeCollection.class);
+                        String s=collection.getAuthority_Place();
+                        if (collection.getPerson_id().equals(id)){
+                            if (collection.getStatus().equals("Pending")){
+                                Toast.makeText(getContext(), collection.getStatus(), Toast.LENGTH_SHORT).show();
+                                if (collection.getAuthority_Place().equals(authority_Place)){
+                                    Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                                    personSchemeCollections.add(collection);
+
+
+                                }}}}
+                    Adaptor.notifyDataSetChanged();
+                }
+
+
+
+                @Override
+                public void onCancelled(@NonNull @org.jetbrains.annotations.NotNull DatabaseError error) {
+
+                }
+            });
+            Adaptor = new AcceptSchemeView(getContext(), personSchemeCollections,id);
+            recyclerView.setAdapter(Adaptor);
+        }
+        else {}
 
 
         return view;

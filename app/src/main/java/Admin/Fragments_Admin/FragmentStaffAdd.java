@@ -35,7 +35,7 @@ View view;
     DatabaseReference profileref = FirebaseDatabase.getInstance().getReference("LoginTable");
     String str_wrkofficer,str_user,str_password,str_nameofficer,Authority_place,type;
     public FragmentStaffAdd(String Authority_place, String type) {
-        // Required empty public constructor
+
         this.Authority_place=Authority_place;
         this.type=type;
     }
@@ -51,7 +51,6 @@ View view;
         etdpass=view.findViewById(R.id.etdpass);
         edtName=view.findViewById(R.id.edtName);
         prograss=view.findViewById(R.id.prograss);
-
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +58,7 @@ View view;
                 str_nameofficer=edtName.getText().toString();
                 str_user=txt_user.getText().toString();
                 str_password=etdpass.getText().toString();
-                if(Objects.equals(str_wrkofficer, "select category")){
+                if(Objects.equals(str_dep, "select category")){
                     Toast.makeText(getContext(),"pls select category",Toast.LENGTH_LONG).show();
                 } else if(TextUtils.isEmpty(str_user)){
                     Toast.makeText(getContext(), "Enter user Name", Toast.LENGTH_SHORT).show();
@@ -69,6 +68,7 @@ View view;
                     Toast.makeText(getContext(),"enter Officer Name",Toast.LENGTH_LONG).show();
                 }
                 else{
+
                     ProfileData Data=new ProfileData();
                     Data.setUser("officer");
                     Data.setAthority_Type(type);

@@ -28,20 +28,20 @@ public class FragmentRequestScheme extends Fragment {
     View view;
     RecyclerView recyclerView;
     String id;
-    String status,authority,authority_Place;
+    String authority,authority_Place,Department;
     ArrayList<PersonSchemeCollection> PersonSchemeCollection;
     RequestSchemeViewAdaptor viewAdaptor;
 
-    public FragmentRequestScheme(String authority, String authority_Place) {
+    public FragmentRequestScheme(String authority, String authority_Place,String Department) {
         this.authority=authority;
         this.authority_Place=authority_Place;
+        this.Department=Department;
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_request_scheme, container, false);
 
         recyclerView=view.findViewById(R.id.recycleRequestscheme);
@@ -51,23 +51,22 @@ public class FragmentRequestScheme extends Fragment {
         PersonSchemeCollection=new ArrayList<>();
 
 
-        DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("Agree_Scheme_Table");
-        Query query=reference2.orderByChild("authority").equalTo(authority);
-        query.addValueEventListener(new ValueEventListener() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Agree_Scheme_Table");
+        PersonSchemeCollection.clear();
+        Query query=reference.orderByChild("authority_type").equalTo(authority);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
-                PersonSchemeCollection.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     PersonSchemeCollection collection = dataSnapshot.getValue(PersonSchemeCollection.class);
-                    assert collection != null;
-                   // if (collection.getAuthority_Place().equalsIgnoreCase("authority_Place")) {
-                        if (collection.getStatus().equalsIgnoreCase("Request")){
-                        PersonSchemeCollection.add(collection);
+                    if (Department.equals("Department")){
+                    if (collection.getStatus().equals("Request") && collection.getDepartment().equals(Department)){
+                    PersonSchemeCollection.add(collection);
 
-                    }else {
-                        PersonSchemeCollection.clear();
-                    }
-                }
+                }}else{
+                        if (collection.getStatus().equals("Verify")) {
+                            PersonSchemeCollection.add(collection);
+                        }}}
                 viewAdaptor.notifyDataSetChanged();
             }
 

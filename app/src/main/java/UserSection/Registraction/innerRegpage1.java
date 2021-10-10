@@ -125,7 +125,7 @@ public class innerRegpage1 extends AppCompatActivity {
 
     private void insertData(UserDataCollection collection, ProfileData data) {
         String key=RKTD.push().getKey();
-        collection.setId(key);
+        data.setId(key);
         RKTD.child(data.getUserName()).setValue(data);
 
         collection.setId(key);

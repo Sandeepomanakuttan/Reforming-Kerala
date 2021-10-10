@@ -1,5 +1,7 @@
     package MainAdmin;
 
+import static android.view.View.GONE;
+
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,8 +38,6 @@ import java.util.Objects;
 
 import Admin.datacollectionClass.ProfileData;
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.view.View.GONE;
 
     public class main_admin_authority_field extends AppCompatActivity {
 TextView panchayath,village;
@@ -161,7 +161,7 @@ TextView panchayath,village;
 
             String key=RKTDRef.push().getKey();
             Data.setId(key);
-            RKTDRef.child(Data.getName()).setValue(Data);
+            RKTDRef.child(Data.getUserName()).setValue(Data);
             Toast.makeText(main_admin_authority_field.this, "User succefully added", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
 

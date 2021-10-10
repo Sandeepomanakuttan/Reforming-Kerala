@@ -153,16 +153,16 @@ public class mainHome extends AppCompatActivity {
         final viewpageAdaptorMain viewpageAdaptorMain = new viewpageAdaptorMain(getSupportFragmentManager());
         viewpageAdaptorMain.AddFragment(new FragmentProfile(Uniqname,id), "Profile");
         viewpageAdaptorMain.AddFragment(new FragmentMassegeMain(id), "Message");
-        viewpageAdaptorMain.AddFragment(new FragmentRequestScheme(authority,authority_Place), "Request Scheme");
-        viewpageAdaptorMain.AddFragment(new FragmentRequestCertificate(authority,authority_Place), "Request Certificate");
+        viewpageAdaptorMain.AddFragment(new FragmentRequestScheme(authority,authority_Place,""), "Request Scheme");
+        viewpageAdaptorMain.AddFragment(new FragmentRequestCertificate(authority,authority_Place,""), "Request Certificate");
 
         viewPager.setAdapter(viewpageAdaptorMain);
         tabLayout.setupWithViewPager(viewPager);
 
         viewpageSchemeAdapter viewpageschemeAdapter = new viewpageSchemeAdapter(getSupportFragmentManager());
-        viewpageschemeAdapter.AddFragment(new FragmentSchemeView(authority,authority_Place), "view Scheme");
+        viewpageschemeAdapter.AddFragment(new FragmentSchemeView(authority,authority_Place,""), "view Scheme");
         viewpageschemeAdapter.AddFragment(new FragmentSchemeAdd(authority,authority_Place), "Add Scheme");
-        viewpageschemeAdapter.AddFragment(new FragmentSchemeApprove(authority,authority_Place), "Approve Scheme");
+        viewpageschemeAdapter.AddFragment(new FragmentSchemeApprove(authority,authority_Place,""), "Verified Scheme");
 
         viewPager1.setAdapter(viewpageschemeAdapter);
         tabLayout1.setupWithViewPager(viewPager1);
@@ -176,8 +176,8 @@ public class mainHome extends AppCompatActivity {
 
 
         viewpageofficeAdapter viewpageofficeAdapter = new viewpageofficeAdapter(getSupportFragmentManager());
-        viewpageofficeAdapter.AddFragment(new FragmentStaffView(authority, authority_Place), "view Office Staff");
-        viewpageofficeAdapter.AddFragment(new FragmentStaffAdd(Authority_place,type), "Add Office Staff");
+        viewpageofficeAdapter.AddFragment(new FragmentStaffView(authority, authority_Place,"officer"), "view Office Staff");
+        viewpageofficeAdapter.AddFragment(new FragmentStaffAdd(authority_Place,authority), "Add Office Staff");
 
         viewPageroffice.setAdapter(viewpageofficeAdapter);
         tabLayoutoffice.setupWithViewPager(viewPageroffice);

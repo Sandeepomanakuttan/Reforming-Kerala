@@ -1,18 +1,17 @@
 package Admin.Fragments_Admin;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.reformingkeralathroughdigitilization.R;
 
 public class FragmentRequestCertificate extends Fragment {
 
-    public FragmentRequestCertificate(String authority, String authority_Place) {
+    public FragmentRequestCertificate(String authority, String authority_Place,String Department) {
         // Required empty public constructor
     }
 

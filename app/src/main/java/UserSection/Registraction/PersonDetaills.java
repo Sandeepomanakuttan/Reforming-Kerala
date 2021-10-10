@@ -79,15 +79,7 @@ public class PersonDetaills extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Enter your Adhaar UID", Toast.LENGTH_SHORT).show();
 
                 }
-                else if (strUid!=""){
-                    boolean res=Verhoeff.validateVerhoeff(strUid);
-                    Result=String.valueOf(res);
-                    if (Result=="false"){
-                        Toast.makeText(getApplicationContext(), "Enter Valid Aadhar Number", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "validate", Toast.LENGTH_SHORT).show();
-                    }
-                }
+
                 else if (TextUtils.isEmpty(strFathername)){
                     Toast.makeText(getApplicationContext(), "Enter your Father Name", Toast.LENGTH_SHORT).show();
 
@@ -110,28 +102,35 @@ public class PersonDetaills extends AppCompatActivity {
                 }
                 else {
 
-                    int radioId=group.getCheckedRadioButtonId();
-                    radioButton=findViewById(radioId);
-                    Intent intent=new Intent(PersonDetaills.this,GenerateOtpPage.class);
-                    intent.putExtra("image", imageUri);
-                    intent.putExtra("Name",strName);
-                    intent.putExtra("dob",strDob);
-                    intent.putExtra("uid",strUid);
-                    intent.putExtra("status",radioButton.getText().toString());
-                    intent.putExtra("Father",strFathername);
-                    intent.putExtra("mother",strMatherName);
-                    intent.putExtra("Address",strAddress);
-                    intent.putExtra("RITNo",strRti);
-                    intent.putExtra("anualIncome",strAnual);
-                    intent.putExtra("HouseOwner",personName);
-                    intent.putExtra("District",Districtvalue);
-                    intent.putExtra("panchayath",Panchayathvalue);
-                    intent.putExtra("HouseNo",HouseNo);
-                    intent.putExtra("WardNo",WardNo);
-                    startActivity(intent);
-                    finish();
+                   if (strUid!=""){
+                        boolean res=Verhoeff.validateVerhoeff(strUid);
+                        Result=String.valueOf(res);
+                        if (Result=="false"){
+                            Toast.makeText(getApplicationContext(), "Enter Valid Aadhar Number", Toast.LENGTH_SHORT).show();
+                        }
+                    else {
+                       int radioId = group.getCheckedRadioButtonId();
+                       radioButton = findViewById(radioId);
+                       Intent intent = new Intent(PersonDetaills.this, GenerateOtpPage.class);
+                       intent.putExtra("image", imageUri);
+                       intent.putExtra("Name", strName);
+                       intent.putExtra("dob", strDob);
+                       intent.putExtra("uid", strUid);
+                       intent.putExtra("status", radioButton.getText().toString());
+                       intent.putExtra("Father", strFathername);
+                       intent.putExtra("mother", strMatherName);
+                       intent.putExtra("Address", strAddress);
+                       intent.putExtra("RITNo", strRti);
+                       intent.putExtra("anualIncome", strAnual);
+                       intent.putExtra("HouseOwner", personName);
+                       intent.putExtra("District", Districtvalue);
+                       intent.putExtra("panchayath", Panchayathvalue);
+                       intent.putExtra("HouseNo", HouseNo);
+                       intent.putExtra("WardNo", WardNo);
+                       startActivity(intent);
+                       finish();
 
-
+                   }}
                      }
                       }
         });

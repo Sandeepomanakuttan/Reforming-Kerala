@@ -22,9 +22,12 @@ public class FragmentStaffView extends Fragment {
     View view;
     RecyclerView recyclerView;
     Recycle_Staff_view_Adaptor adapter;
+    String Status,authority,authority_Place;
 
-    public FragmentStaffView(String authority, String authority_Place) {
-        // Required empty public constructor
+    public FragmentStaffView(String authority, String authority_Place,String Status) {
+        this.Status=Status;
+        this.authority=authority;
+        this.authority_Place=authority_Place;
     }
 
     @Override
@@ -36,16 +39,16 @@ public class FragmentStaffView extends Fragment {
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-
-        FirebaseRecyclerOptions<ProfileData> options =
-                new FirebaseRecyclerOptions.Builder<ProfileData>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference("LoginTable").orderByChild("user").equalTo("officer"),ProfileData.class)
-                        .build();
-        Log.e("test",options.toString());
-        adapter=new Recycle_Staff_view_Adaptor(options);
-        recyclerView.setAdapter(adapter);
-        adapter.startListening();
-
+        if (Status.equals("officer")) {
+            FirebaseRecyclerOptions<ProfileData> options =
+                    new FirebaseRecyclerOptions.Builder<ProfileData>()
+                            .setQuery(FirebaseDatabase.getInstance().getReference("LoginTable").orderByChild("user").equalTo("officer"), ProfileData.class)
+                            .build();
+            Log.e("test", options.toString());
+            adapter = new Recycle_Staff_view_Adaptor(options);
+            recyclerView.setAdapter(adapter);
+            adapter.startListening();
+        }
         return view;
     }
 }

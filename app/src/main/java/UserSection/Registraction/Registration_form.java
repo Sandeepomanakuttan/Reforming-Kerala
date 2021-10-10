@@ -120,16 +120,18 @@ public class Registration_form extends AppCompatActivity {
                                     finish();
                                     break;
 
+                                }else {
+                                    Toast.makeText(Registration_form.this, "Data Does not match", Toast.LENGTH_LONG).show();
+                                    Name.setText("");
+                                    edtWardNo.setText("");
+                                    edtHouseNo.setText("");
+                                }
                                 }
 
                             }
 
                         }
-                            Toast.makeText(Registration_form.this,"Data Does not match",Toast.LENGTH_LONG).show();
-                            Name.setText("");
-                            edtWardNo.setText("");
-                            edtHouseNo.setText("");
-                        }
+
 
                         @Override
                         public void onCancelled(@NonNull @NotNull DatabaseError error) {

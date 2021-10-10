@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -33,13 +34,15 @@ public class MainPageUser extends AppCompatActivity {
         final viewpageAdaptorMain viewpageAdaptorMain = new viewpageAdaptorMain(getSupportFragmentManager());
         viewpageAdaptorMain.AddFragment(new FragmentProfile(name, id), "Profile");
         viewPager.setAdapter(viewpageAdaptorMain);
-
+        Toast.makeText(this, authority_Place, Toast.LENGTH_SHORT).show();
         tabLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainPageUser.this,UserMainPage.class);
-                intent.putExtra("authority","Panchayath");
+                intent.putExtra("authority","Villege");
                 intent.putExtra("authority_Place",authority_Place);
+                intent.putExtra("id", id);
+                intent.putExtra("name", name);
                 startActivity(intent);
             }
         });
@@ -48,8 +51,10 @@ public class MainPageUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainPageUser.this,UserMainPage.class);
-                intent.putExtra("authority","Villege");
+                intent.putExtra("authority","Panchayath");
                 intent.putExtra("authority_Place",authority_Place);
+                intent.putExtra("id", id);
+                intent.putExtra("name", name);
                 startActivity(intent);
             }
         });

@@ -1,5 +1,7 @@
 package Admin.Fragments_Admin;
 
+import static android.widget.Toast.makeText;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -22,14 +24,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import Admin.datacollectionClass.SchemedataCollection;
 
-import static android.widget.Toast.makeText;
-
 
 public class FragmentSchemeAdd extends Fragment {
 
-    EditText schName,category,equitment,amount,below,above,criteria;
-    Spinner type;
-    String strschName,strcategory,strtype,strequitment,stramount,strbelow,strabove,strcriteria;
+    EditText schName,equitment,amount,below,above,criteria;
+    Spinner type,spinner;
+    String strschName,str_dep,strtype,strequitment,stramount,strbelow,strabove,strcriteria;
     Button sub;
     View view;
     String authority;
@@ -43,24 +43,22 @@ public class FragmentSchemeAdd extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
          view=inflater.inflate(R.layout.fragment_scheme_add, container, false);
          schName=view.findViewById(R.id.edtschemename);
-         category=view.findViewById(R.id.edtschemecatagory);
+         spinner=view.findViewById(R.id.spinner);
          type=view.findViewById(R.id.edtschemeType);
-         //equitment=view.findViewById(R.id.edtequitment);
          amount=view.findViewById(R.id.edtamount);
          below=view.findViewById(R.id.edtfrom);
          criteria=view.findViewById(R.id.edtschemecriteria);
          above=view.findViewById(R.id.edtto);
          sub=view.findViewById(R.id.btnsubmit);
 
-
+        Toast.makeText(getContext(), authority_Place, Toast.LENGTH_SHORT).show();
         sub.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  strschName = schName.getText().toString();
-                 strcategory = category.getText().toString();
+                 str_dep = spinner.getSelectedItem().toString();
                  strtype = type.getSelectedItem().toString();
 //                 strequitment=equitment.getText().toString();
                  stramount = amount.getText().toString();
@@ -68,10 +66,11 @@ public class FragmentSchemeAdd extends Fragment {
                  strbelow = below.getText().toString();
                  strabove = above.getText().toString();
 
+
                  if (TextUtils.isEmpty(strschName)) {
                      makeText(getActivity(), "please Enter scheme name", Toast.LENGTH_SHORT).show();
-                 } else if (TextUtils.isEmpty(strcategory)) {
-                     Toast.makeText(getActivity(), "please Enter scheme catagory", Toast.LENGTH_SHORT).show();
+                 } else if (str_dep.equals("select category")){
+                     Toast.makeText(getContext(),"pls select category",Toast.LENGTH_LONG).show();
                  } else if (strtype.equals("select Scheme")) {
                      Toast.makeText(getActivity(), "please select scheme type", Toast.LENGTH_SHORT).show();
                  } else if (strcriteria.isEmpty()) {
@@ -81,9 +80,8 @@ public class FragmentSchemeAdd extends Fragment {
                  } else if (TextUtils.isEmpty(strabove)) {
                      Toast.makeText(getActivity(), "please Enter Above Limit", Toast.LENGTH_SHORT).show();
                  } else {
-                        String aut=authority;
-                        String autP=authority_Place;
-                     SchemedataCollection schemedata = new SchemedataCollection(strschName, strcategory, strtype, strequitment, stramount, strbelow, strabove, strcriteria,aut,autP);
+
+                     SchemedataCollection schemedata = new SchemedataCollection(strschName, str_dep, strtype, strequitment, stramount, strbelow, strabove, strcriteria,authority,authority_Place,"Null");
                      checktoInsert(schemedata);
                  }
              }
@@ -104,25 +102,18 @@ public class FragmentSchemeAdd extends Fragment {
         RKTDRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                SchemedataCollection collection=snapshot.getValue(SchemedataCollection.class);
-                if (collection.getAuthority_Place().equalsIgnoreCase(schemedata.getAuthority_Place().toString())){
-                    if (collection.getAuthority().equalsIgnoreCase(schemedata.getAuthority().toString())){
-                        if (snapshot.child(schemedata.getStrschName()).exists()) {
-                            Toast.makeText(getContext(), "Scheme already Inserted", Toast.LENGTH_SHORT).show();
-                        }else {
-                            InsertScheme(schemedata);
-                            Toast.makeText(getContext(), "Succefully Insert", Toast.LENGTH_SHORT).show();
-                        }
-                            }else {
+                SchemedataCollection collection = snapshot.getValue(SchemedataCollection.class);
+                if (collection != (null))
+                    if ((snapshot.child(schemedata.getStrschName()).exists()) && (collection.getAuthority().equals(schemedata.getAuthority())) && (collection.getAuthority_Place().equals(schemedata.getAuthority_Place()))) {
+                        Toast.makeText(getContext(), "Scheme already Inserted", Toast.LENGTH_SHORT).show();
+                    } else {
                         InsertScheme(schemedata);
                         Toast.makeText(getContext(), "Succefully Insert", Toast.LENGTH_SHORT).show();
                     }
-                                }else {
+                            else {
                     InsertScheme(schemedata);
                     Toast.makeText(getContext(), "Succefully Insert", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
 
             @Override

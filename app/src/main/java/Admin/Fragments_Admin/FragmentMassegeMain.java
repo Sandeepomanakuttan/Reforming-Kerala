@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import Admin.RecycleAdaptor.MsgAdaptor;
 import Admin.datacollectionClass.ProfileData;
@@ -64,12 +65,14 @@ public class FragmentMassegeMain extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                PersonArrayList.clear();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    PersonArrayList.clear();
                     ProfileData profileData=dataSnapshot.getValue(ProfileData.class);
-                    if (!profileData.getId().equals(id)) {
+                    String s=profileData.getId();
+                    if (!Objects.equals(s, id)) {
                         PersonArrayList.add(profileData);
                     }
+
                 }
                 msgAdaptor.notifyDataSetChanged();
             }

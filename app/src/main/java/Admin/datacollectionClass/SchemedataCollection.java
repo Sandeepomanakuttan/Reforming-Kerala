@@ -18,7 +18,7 @@ public class SchemedataCollection {
 
     }
 
-    public SchemedataCollection(String strschName, String strcategory, String strtype, String strequitment, String stramount, String strbelow, String strabove, String strcriteria,String authority,String authority_Place) {
+    public SchemedataCollection(String strschName, String strcategory, String strtype, String strequitment, String stramount, String strbelow, String strabove, String strcriteria,String authority,String authority_Place,String StrStatus) {
         this.strschName = strschName;
         this.strcategory = strcategory;
         this.strtype = strtype;
@@ -29,6 +29,7 @@ public class SchemedataCollection {
         this.strcriteria = strcriteria;
         this.authority=authority;
         this.authority_Place=authority_Place;
+        this.StrStatus=StrStatus;
     }
 
     public String getAuthority() {

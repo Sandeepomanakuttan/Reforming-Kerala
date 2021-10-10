@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.reformingkeralathroughdigitilization.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 import Admin.datacollectionClass.SchemedataCollection;
 import UserSection.Collectionclass.PersonSchemeCollection;
@@ -29,17 +32,19 @@ import UserSection.Collectionclass.PersonSchemeCollection;
 public class SchemeViewAdaptor extends RecyclerView.Adapter<SchemeViewAdaptor.Viewholder> {
 
     Context context;
+    String strName;
     ArrayList<SchemedataCollection> schemeArrayList;
     String id;
     int flag=0;
+    SchemedataCollection collection;
 
-DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Agree_Scheme_Table");
-
+    DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Scheme_Table");
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Agree_Scheme_Table");
 
     public SchemeViewAdaptor(Context context, ArrayList<SchemedataCollection> schemeArrayList, String id) {
         this.context = context;
         this.schemeArrayList = schemeArrayList;
-        this.id = id;
+        this.id=id;
     }
 
     public @NotNull Viewholder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
@@ -50,51 +55,60 @@ DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Agree
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull SchemeViewAdaptor.Viewholder holder, int position) {
-        SchemedataCollection collection = schemeArrayList.get(position);
+        collection = schemeArrayList.get(position);
+        strName=collection.getStrschName();
         String status=collection.getStrStatus();
-//        if (status.equalsIgnoreCase("Accept")){
+
+
+        if (status.equalsIgnoreCase("Null")) {
+            holder.txtschname.setText(collection.getStrschName());
+            holder.txtcategory.setText(collection.getStrcategory());
+            holder.txtType.setText(collection.getStrtype());
+            holder.txtBelow.setText(collection.getStrbelow());
+            holder.txtAbove.setText(collection.getStrabove());
+            holder.txtAmount.setText(collection.getStramount());
+            holder.btnapply.setText("Apply");
+
+            holder.btnapply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PersonSchemeCollection personSchemeCollection = new PersonSchemeCollection();
+                    personSchemeCollection.setPerson_id(id);
+                    personSchemeCollection.setScheme_id(collection.getId());
+                    personSchemeCollection.setScheme_Name(collection.getStrschName());
+                    personSchemeCollection.setAmount(collection.getStramount());
+                    personSchemeCollection.setStatus("Request");
+                    personSchemeCollection.setAuthority_type(collection.getAuthority());
+                    personSchemeCollection.setAuthority_Place(collection.getAuthority_Place());
+                    Date date = new Date();
+                    personSchemeCollection.setDate(date);
+                    personSchemeCollection.setTimeStamp(date.getTime());
+                    personSchemeCollection.setDepartment(collection.getStrcategory());
+                    updateData("True");
+                    checkdata(personSchemeCollection);
+                }
+            });
+//        }else if() {
 //            holder.txtschname.setText(collection.getStrschName());
 //            holder.txtcategory.setText(collection.getStrcategory());
 //            holder.txtType.setText(collection.getStrtype());
 //            holder.txtBelow.setText(collection.getStrbelow());
 //            holder.txtAbove.setText(collection.getStrabove());
-//            holder.btnapply.setText("Remove");
-//            holder.btnapply.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
+//            holder.btnapply.setOnClickListener(v -> {
+//                Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
 //
-//                }
 //            });
-//        }else{
-        holder.txtschname.setText(collection.getStrschName());
-        holder.txtcategory.setText(collection.getStrcategory());
-        holder.txtType.setText(collection.getStrtype());
-        holder.txtBelow.setText(collection.getStrbelow());
-        holder.txtAbove.setText(collection.getStrabove());
-//        holder.btnapply.setOnClickListener(v -> {
-//            Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
-//            PersonSchemeCollection personSchemeCollection = new PersonSchemeCollection();
-//            personSchemeCollection.setPerson_id("1");
-//            personSchemeCollection.setScheme_id(collection.getId());
-//            personSchemeCollection.setScheme_Name(collection.getStrschName());
-//            personSchemeCollection.setAmount(collection.getStramount());
-//            personSchemeCollection.setStatus("Request");
-//            personSchemeCollection.setAuthority_type(collection.getAuthority());
-//            personSchemeCollection.setAuthority_Place(collection.getAuthority_Place());
-//            Date date=new Date();
-//            personSchemeCollection.setDate(date);
-//            personSchemeCollection.setTimeStamp(date.getTime());
-//            personSchemeCollection.setStatus(collection.getStrcategory());
-//            checkdata(personSchemeCollection);
-//        });
-    }
+//        }
+
+
+        }}
 
     @Override
     public int getItemCount() {
         return schemeArrayList.size();
     }
 
-    static class Viewholder extends RecyclerView.ViewHolder {
+    class Viewholder extends RecyclerView.ViewHolder {
 
         TextView txtschname, txtcategory, txtType, txtBelow, txtAbove,txtAmount;
         Button btnapply;
@@ -108,6 +122,7 @@ DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Agree
             txtBelow = itemView.findViewById(R.id.txtBelow);
             txtAbove = itemView.findViewById(R.id.txtAbove);
             txtAmount = itemView.findViewById(R.id.txtAmount);
+            btnapply = itemView.findViewById(R.id.btnapply);
 
 
         }
@@ -118,6 +133,18 @@ DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Agree
         DataCollection.setId(key);
         reference.child(DataCollection.getId()).setValue(DataCollection);
         Toast.makeText(context.getApplicationContext(), "succefully Inserted", Toast.LENGTH_SHORT).show();
+    }
+    private void updateData(String True) {
+        HashMap<String, Object> update = new HashMap<String, Object>();
+        update.put("strStatus", True);
+
+        reference1.child(strName).updateChildren(update).addOnSuccessListener((OnSuccessListener) this::onSuccess).addOnFailureListener(e -> {
+            Toast.makeText(context.getApplicationContext(), "Something is error", Toast.LENGTH_SHORT).show();
+
+        });
+    }
+
+    private void onSuccess(Object o) {
     }
 
     public void checkdata(PersonSchemeCollection Data) {
@@ -142,6 +169,7 @@ DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Agree
                 InsertPersonalScheme(Data);
                 flag=0;
                 Toast.makeText(context, "Insert", Toast.LENGTH_SHORT).show();
+                collection.setStrStatus("Apply");
 
             }}
 

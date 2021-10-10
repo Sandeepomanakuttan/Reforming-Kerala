@@ -38,6 +38,9 @@ public class UserDataCollection {
                 '}';
     }
 
+    public UserDataCollection() {
+    }
+
     public UserDataCollection(String houseOwnerName, String personName, String district, String panchayath, String wardNo, String houseNo, String dob, String uid, String status, String fatherName, String motherName, String address, String ritNo, String anualIncime, String mobile) {
         HouseOwnerName = houseOwnerName;
         PersonName = personName;

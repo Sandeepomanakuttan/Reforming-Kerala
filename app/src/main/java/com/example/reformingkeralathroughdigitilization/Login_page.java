@@ -52,10 +52,6 @@ DatabaseReference RKTDRef;
         progressBar=findViewById(R.id.progressBar1);
         login=findViewById(R.id.button);
 
-//        String regexPassword = "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}";
-//        awesomeValidation.addValidation(this, R.id.edittxtName, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.nameerror);
-//        awesomeValidation.addValidation(this, R.id.edittxtPassword,regexPassword , R.string.passworderror);
-
 
 
         login.setOnClickListener(v -> {
@@ -72,20 +68,23 @@ DatabaseReference RKTDRef;
             }
             else {
                 if (awesomeValidation.validate()) {
+                    Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
                     ProfileData dataClass = new ProfileData();
                     dataClass.setUserName(struserName);
                     dataClass.setPassword(strPassword);
                     Query query;
                     query = RKTDRef;
+//                    .orderByChild("userName").equalTo(dataClass.getUserName())
                     query.addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.child(struserName).exists()){
                             for (DataSnapshot childSnapshot : snapshot.getChildren()) {
                                 ProfileData data = childSnapshot.getValue(ProfileData.class);
-                                    if(data.getPassword().equals(strPassword)) {
-                                        if (data.getUser().equals("General")) {
+                                Toast.makeText(Login_page.this, "hlll", Toast.LENGTH_SHORT).show();
+                                if (data.getUserName().equals(dataClass.getUserName())){
+                                    if(dataClass.getPassword().equals(data.getPassword())) {
+                                        if (data.getUser().equalsIgnoreCase("General")) {
                                             Toast.makeText(Login_page.this, "welcome", Toast.LENGTH_SHORT).show();
                                             String id = data.getId();
                                             String name=data.getName();
@@ -97,27 +96,37 @@ DatabaseReference RKTDRef;
                                             finish();
                                             break;
 
-                                        } else if (data.getUser().equals("Admin")) {
+                                        } else if (data.getUser().equalsIgnoreCase("Admin")) {
                                             String id = data.getId();
                                             progressBar.setVisibility(View.INVISIBLE);
                                             Intent MainPage = new Intent(Login_page.this, mainHome.class);
                                             MainPage.putExtra("id", id);
                                             String name=data.getName();
                                             MainPage.putExtra("name", name);
+                                            String authority_Place=data.getAuthority_Place();
+                                            String authority=data.getAthority_Type();
+                                            MainPage.putExtra("authority_Place",authority_Place);
+                                            MainPage.putExtra("authority",authority);
                                             startActivity(MainPage);
                                             finish();
                                             break;
-                                        }else if (data.getUser().equals("officer")) {
+                                        }else if (data.getUser().equalsIgnoreCase("officer")) {
                                             String id = data.getId();
                                             progressBar.setVisibility(View.INVISIBLE);
                                             Intent EmployeePage = new Intent(Login_page.this, EmployeeMainPage.class);
                                             EmployeePage.putExtra("id", id);
                                             String name=data.getName();
                                             EmployeePage.putExtra("name", name);
+                                            String authority_Place=data.getAuthority_Place();
+                                            String Depart=data.getDepartment();
+                                            String authority=data.getAthority_Type();
+                                            EmployeePage.putExtra("authority_Place",authority_Place);
+                                            EmployeePage.putExtra("Department",Depart);
+                                            EmployeePage.putExtra("authority",authority);
                                             startActivity(EmployeePage);
                                             finish();
                                             break;
-                                        }else if (data.getUser().equals("User")) {
+                                        }else if (data.getUser().equalsIgnoreCase("User")) {
                                             String id = data.getId();
                                             progressBar.setVisibility(View.INVISIBLE);
                                             Intent UserPage = new Intent(Login_page.this, MainPageUser.class);
@@ -129,16 +138,17 @@ DatabaseReference RKTDRef;
                                             startActivity(UserPage);
                                             finish();
                                             break;
+                                        } else {
+                                            Toast.makeText(Login_page.this, "invalid user", Toast.LENGTH_SHORT).show();
                                         }
-
+                                    }
+                                    else {
+                                        Toast.makeText(Login_page.this, "Invalid Password", Toast.LENGTH_SHORT).show();
+                                    }
+                                }else{
+                                    Toast.makeText(Login_page.this, "Invalid UserName", Toast.LENGTH_SHORT).show();
                                 }
-                                else{
-                                    Toast.makeText(Login_page.this, "Invalid Password", Toast.LENGTH_SHORT).show();
-                                }
 
-
-                            }}else {
-                                Toast.makeText(Login_page.this, "Nothing", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -154,8 +164,8 @@ DatabaseReference RKTDRef;
         });
 
         createNewAccount.setOnClickListener(v -> {
-            Intent goregistrationPage=new Intent(Login_page.this, Registration_form.class);
-            startActivity(goregistrationPage);
+            Intent registrationPage=new Intent(Login_page.this, Registration_form.class);
+            startActivity(registrationPage);
             finish();
         });
 

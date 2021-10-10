@@ -25,34 +25,40 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Recycle_Staff_view_Adaptor extends FirebaseRecyclerAdapter<ProfileData,Recycle_Staff_view_Adaptor.myviewholder> {
 
+    String authority,authority_Place;
+
     public Recycle_Staff_view_Adaptor(@NonNull FirebaseRecyclerOptions<ProfileData> options) {
         super(options);
+        this.authority_Place=authority_Place;
+        this.authority=authority;
     }
 
     @Override
     protected void onBindViewHolder(@NonNull Recycle_Staff_view_Adaptor.myviewholder holder, int position, @NonNull ProfileData model) {
-        String id=model.getId();
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Profile_Table");
-        Query query =reference.orderByChild("id").equalTo(id);
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-                    ProfileData data = childSnapshot.getValue(ProfileData.class);
-                    // String link = snapshot.child("imageUri").getValue().toString();
-                    String link1 =data.getImageUri();
-                    Picasso.get().load(link1).into(holder.pic);
+            String id=model.getId();
+            DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Profile_Table");
+            Query query =reference.orderByChild("id").equalTo(id);
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                        ProfileData data = childSnapshot.getValue(ProfileData.class);
+                        // String link = snapshot.child("imageUri").getValue().toString();
+                        String link1 =data.getImageUri();
+                        Picasso.get().load(link1).into(holder.pic);
+                    }
+
                 }
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+            holder.txtname.setText(model.getName());
+            holder.txtWard.setText(model.getUser());
 
-            }
-        });
-        holder.txtname.setText(model.getName());
-        holder.txtWard.setText(model.getUser());
+
 
     }
 

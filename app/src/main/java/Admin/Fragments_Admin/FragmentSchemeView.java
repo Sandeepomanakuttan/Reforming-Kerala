@@ -29,12 +29,13 @@ public class FragmentSchemeView extends Fragment {
     View view;
     RecyclerView recyclerView;
     String id;
-    String status,authority,authority_Place;
+    String status,authority,authority_Place,department;
     ArrayList<SchemedataCollection> SchemeArrayList;
     SchemeViewAdaptor viewAdaptor;
-    public FragmentSchemeView(String authority, String authority_Place) {
+    public FragmentSchemeView(String authority, String authority_Place, String department) {
         this.authority=authority;
         this.authority_Place=authority_Place;
+        this.department=department;
     }
 
 
@@ -46,24 +47,21 @@ public class FragmentSchemeView extends Fragment {
         recyclerView=view.findViewById(R.id.recycleViewscheme);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-
         SchemeArrayList=new ArrayList<>();
 
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Scheme_Table");
-
+        SchemeArrayList.clear();
         Query query=reference.orderByChild("authority").equalTo(authority);
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
-                SchemeArrayList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     SchemedataCollection collection = dataSnapshot.getValue(SchemedataCollection.class);
-                  //  if (collection.getAuthority_Place().equalsIgnoreCase("authority_Place")) {
+                    if (collection.getStrcategory().equals(department)&&collection.getAuthority_Place().equals(authority_Place)){
                         SchemeArrayList.add(collection);
 
-
-                }
+                }}
                 viewAdaptor.notifyDataSetChanged();
             }
 

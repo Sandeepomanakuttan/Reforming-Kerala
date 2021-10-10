@@ -77,7 +77,7 @@ public class EmployeeMainPage extends AppCompatActivity {
     androidx.appcompat.widget.Toolbar toolbar;
     TabLayout tabLayout,tabLayoutScheme,tabLayoutuser,tabLayoutoffice,tabLayoutCertificate;
     String id,Uniqname;
-    String stringusername, stringpassword,type,authority,authority_Place;
+    String stringusername, stringpassword,type,authority,authority_Place,Department;
     Uri imageuri = null;
     DatabaseReference databaseReference, profileref;
     StorageReference storageReference = FirebaseStorage.getInstance().getReference();
@@ -142,21 +142,22 @@ public class EmployeeMainPage extends AppCompatActivity {
         Uniqname = getIntent().getStringExtra("name");
         authority = getIntent().getStringExtra("authority");
         authority_Place = getIntent().getStringExtra("authority_Place");
+        Department = getIntent().getStringExtra("Department");
 
         EditprofileGetdata();
 
         final viewpageAdaptorMain viewpageAdaptorMain = new viewpageAdaptorMain(getSupportFragmentManager());
         viewpageAdaptorMain.AddFragment(new FragmentProfile(Uniqname,id), "Profile");
         viewpageAdaptorMain.AddFragment(new FragmentMassegeMain(id), "Message");
-        viewpageAdaptorMain.AddFragment(new FragmentRequestScheme(authority, authority_Place), "Request Scheme");
-        viewpageAdaptorMain.AddFragment(new FragmentRequestCertificate(authority, authority_Place), "Request Certificate");
+        viewpageAdaptorMain.AddFragment(new FragmentRequestScheme(authority, authority_Place,Department), "Request Scheme");
+        viewpageAdaptorMain.AddFragment(new FragmentRequestCertificate(authority, authority_Place,Department), "Request Certificate");
 
        viewPager.setAdapter(viewpageAdaptorMain);
        tabLayout.setupWithViewPager(viewPager);
 
         viewpageSchemeAdapter viewpageschemeAdapter = new viewpageSchemeAdapter(getSupportFragmentManager());
-        viewpageschemeAdapter.AddFragment(new FragmentSchemeView(authority, authority_Place), "view Scheme");
-        viewpageschemeAdapter.AddFragment(new FragmentSchemeApprove(authority, authority_Place), "Verify Scheme");
+        viewpageschemeAdapter.AddFragment(new FragmentSchemeView(authority, authority_Place,Department), "view Scheme");
+        viewpageschemeAdapter.AddFragment(new FragmentSchemeApprove(authority, authority_Place,Department), "Verify Scheme");
 
         viewPagerScheme.setAdapter(viewpageschemeAdapter);
         tabLayoutScheme.setupWithViewPager(viewPagerScheme);
@@ -169,7 +170,7 @@ public class EmployeeMainPage extends AppCompatActivity {
 
 
         viewpageofficeAdapter viewpageofficeAdapter = new viewpageofficeAdapter(getSupportFragmentManager());
-        viewpageofficeAdapter.AddFragment(new FragmentStaffView(authority, authority_Place), "view Office Staff");
+        viewpageofficeAdapter.AddFragment(new FragmentStaffView(authority,authority_Place,"officer"), "view Office Staff");
 
         viewPageroffice.setAdapter(viewpageofficeAdapter);
         tabLayoutoffice.setupWithViewPager(viewPageroffice);

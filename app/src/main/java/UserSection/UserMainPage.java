@@ -44,7 +44,6 @@ import java.util.HashMap;
 
 import Admin.Fragments_Admin.FragmentMassegeMain;
 import Admin.Fragments_Admin.FragmentStaffView;
-import Admin.Fragments_Admin.FragmentUserView;
 import Admin.Fragments_Admin.viewpageSchemeAdapter;
 import Admin.datacollectionClass.ProfileData;
 import Admin.viewpageAdaptorMain;
@@ -136,6 +135,10 @@ public class UserMainPage extends AppCompatActivity {
         authority = getIntent().getStringExtra("authority");
         authority_Place = getIntent().getStringExtra("authority_Place");
 
+        Toast.makeText(this, authority_Place, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, authority, Toast.LENGTH_SHORT).show();
+
+
 
         EditprofileGetdata();
 
@@ -157,14 +160,14 @@ public class UserMainPage extends AppCompatActivity {
         tabLayoutScheme.setupWithViewPager(viewPagerScheme);
 
         viewpageUserAdapter viewpageuserAdapter = new viewpageUserAdapter(getSupportFragmentManager());
-        viewpageuserAdapter.AddFragment(new FragmentUserView(), "view Admin");
+        viewpageuserAdapter.AddFragment(new FragmentStaffView(authority,authority_Place,"Admin"), "view Admin");
 
         viewPageruser.setAdapter(viewpageuserAdapter);
         tabLayoutuser.setupWithViewPager(viewPageruser);
 
 
         viewpageofficeAdapter viewpageofficeAdapter = new viewpageofficeAdapter(getSupportFragmentManager());
-        viewpageofficeAdapter.AddFragment(new FragmentStaffView(authority,authority_Place), "view Officier");
+        viewpageofficeAdapter.AddFragment(new FragmentStaffView(authority,authority_Place,"officer"), "view Officier");
 
         viewPageroffice.setAdapter(viewpageofficeAdapter);
         tabLayoutoffice.setupWithViewPager(viewPageroffice);
@@ -204,8 +207,6 @@ public class UserMainPage extends AppCompatActivity {
                     officeLayout.setVisibility(View.GONE);
                     schemeConstraintLayout.setVisibility(View.GONE);
                     certicateLayout.setVisibility(View.GONE);
-
-
                     break;
 
 
